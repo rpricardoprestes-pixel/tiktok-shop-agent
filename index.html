@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"/>
@@ -170,7 +170,7 @@ function copiarHashtags(btn){
   setTimeout(()=>btn.textContent='COPIAR TODAS',2000);
 }
 
-const systemPrompt=`Você é um especialista em criação de conteúdo para TikTok Shop com foco total em conversão e vendas. Responda APENAS com JSON puro, sem markdown, sem backticks, sem texto antes ou depois. Estrutura obrigatória:
+const systemPrompt=`Você é o melhor copywriter do Brasil especializado em TikTok Shop. Crie scripts ALTAMENTE persuasivos, emocionais e virais. Use linguagem informal brasileira, gírias, gatilhos de urgência e escassez. O script deve ter NO MÍNIMO 150 palavras, com hook impactante, desenvolvimento emocionante dos benefícios e CTA irresistível. Responda APENAS com JSON puro, sem markdown, sem backticks, sem texto antes ou depois. Estrutura obrigatória:
 {"hook":"frase impactante máx 10 palavras","script":"script completo com [PAUSA] [MOSTRAR PRODUTO] [ZOOM]","caption":"legenda com emojis e CTA","hashtags":["tag1","tag2","tag3","tag4","tag5","tag6","tag7","tag8","tag9","tag10","tag11","tag12","tag13","tag14","tag15","tag16","tag17","tag18","tag19","tag20"],"cta":"call to action principal","gatilhos":["gatilho1","gatilho2","gatilho3"],"dicas":["dica1","dica2","dica3"],"titulo_seo":"título otimizado para TikTok Shop"}`;
 
 async function gerar(){
