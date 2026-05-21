@@ -1,12 +1,227 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Agente TikTok Shop</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Agente TikTok Shop</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0a0f;font-family:'Segoe UI',sans-serif;color:#fff;min-height:100vh;padding:40px 20px}
+.container{max-width:680px;margin:0 auto}
+.badge{display:inline-flex;align-items:center;background:rgba(255,0,80,0.12);border:1px solid rgba(255,0,80,0.3);border-radius:100px;padding:6px 16px;margin-bottom:20px;font-size:12px;color:#ff0050;font-weight:700;letter-spacing:1.5px}
+h1{font-size:clamp(28px,6vw,44px);font-weight:900;line-height:1.1;margin-bottom:12px;background:linear-gradient(135deg,#fff 0%,#ff0050 50%,#00f5a0 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.subtitle{color:#666;font-size:15px;margin-bottom:40px}
+.card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:28px;margin-bottom:20px}
+label{font-size:12px;font-weight:700;letter-spacing:1.2px;color:#666;display:block;margin-bottom:10px}
+textarea{width:100%;min-height:100px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-size:14px;padding:16px;resize:vertical;outline:none;font-family:inherit;line-height:1.6;transition:border-color 0.2s}
+textarea:focus{border-color:rgba(255,0,80,0.5)}
+textarea::placeholder{color:#333}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.opt-label{font-size:11px;font-weight:700;letter-spacing:1px;color:#555;display:block;margin-bottom:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:6px 12px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:600;transition:all 0.15s;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);color:#666}
+.chip.active-red{background:rgba(255,0,80,0.2);border-color:rgba(255,0,80,0.5);color:#ff6b8a}
+.chip.active-green{background:rgba(0,245,160,0.15);border-color:rgba(0,245,160,0.4);color:#00f5a0}
+.btn-main{width:100%;margin-top:20px;padding:16px;background:linear-gradient(135deg,#ff0050,#ff4d6d);border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:0.5px;transition:all 0.2s;box-shadow:0 8px 32px rgba(255,0,80,0.3)}
+.btn-main:disabled{background:rgba(255,255,255,0.05);box-shadow:none;cursor:not-allowed}
+.hook-card{background:linear-gradient(135deg,rgba(255,0,80,0.15),rgba(255,0,80,0.05));border:1px solid rgba(255,0,80,0.25);border-radius:16px;padding:20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.hook-label{font-size:11px;color:#ff0050;font-weight:700;letter-spacing:1.2px;margin-bottom:6px}
+.hook-text{font-size:18px;font-weight:800;color:#fff;line-height:1.3}
+.tabs{display:flex;border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.3)}
+.tab{flex:1;padding:14px 8px;background:none;border:none;border-bottom:2px solid transparent;color:#555;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.15s}
+.tab.active{border-bottom-color:#ff0050;color:#fff}
+.tab-content{padding:24px}
+.section-label{font-size:11px;color:#555;font-weight:700;letter-spacing:1px;margin-bottom:12px}
+.text-box{background:rgba(0,0,0,0.3);border-radius:12px;padding:16px;font-size:14px;line-height:1.8;color:#ccc;white-space:pre-wrap;border:1px solid rgba(255,255,255,0.05)}
+.cta-box{background:rgba(0,245,160,0.08);border:1px solid rgba(0,245,160,0.2);border-radius:10px;padding:12px 16px;font-size:14px;color:#00f5a0;font-weight:700;display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+.copy-btn{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#aaa;border-radius:8px;padding:4px 12px;font-size:11px;cursor:pointer;font-weight:600;letter-spacing:0.5px;transition:all 0.2s;font-family:inherit}
+.copy-btn:hover{background:rgba(255,255,255,0.15)}
+.hashtags{display:flex;flex-wrap:wrap;gap:8px}
+.hashtag{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:6px 14px;font-size:13px;color:#888;cursor:pointer;transition:all 0.15s;font-weight:600}
+.hashtag:hover{background:rgba(0,245,160,0.1);color:#00f5a0}
+.gatilho{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:10px 14px;font-size:13px;color:#bbb;display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.dica{background:rgba(0,245,160,0.04);border:1px solid rgba(0,245,160,0.1);border-radius:10px;padding:10px 14px;font-size:13px;color:#aaa;display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
+.btn-regen{width:100%;margin-top:12px;padding:12px;background:transparent;border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#555;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.btn-regen:hover{border-color:rgba(255,255,255,0.2);color:#aaa}
+.error{color:#ff6b8a;font-size:13px;margin-top:12px;text-align:center}
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;display:inline-block;margin-right:10px;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+.result{animation:fadeIn 0.4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.seo-box{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 16px;font-size:13px;color:#aaa;display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:16px}
+</style>
+</head>
+<body>
+<div class="container">
+  <div style="text-align:center;margin-bottom:40px">
+    <div class="badge">● LIVE · TIKTOK SHOP AI</div>
+    <h1>Agente de Conteúdo<br>para TikTok Shop</h1>
+    <p class="subtitle">Cole seu produto → receba script, legenda e hashtags prontos</p>
+  </div>
+
+  <div class="card">
+    <label>PRODUTO / SERVIÇO</label>
+    <textarea id="produto" placeholder="Ex: Creme facial hidratante com vitamina C, 50ml, R$89,90. Indicado para pele seca..."></textarea>
+    <div class="options">
+      <div>
+        <span class="opt-label">TOM</span>
+        <div class="chips" id="toms">
+          <button class="chip active-red" onclick="selectTom(this)">Urgente 🔥</button>
+          <button class="chip" onclick="selectTom(this)">Engraçado 😂</button>
+          <button class="chip" onclick="selectTom(this)">Inspirador ✨</button>
+          <button class="chip" onclick="selectTom(this)">Educativo 📚</button>
+          <button class="chip" onclick="selectTom(this)">Exclusivo 💎</button>
+        </div>
+      </div>
+      <div>
+        <span class="opt-label">FORMATO</span>
+        <div class="chips" id="formatos">
+          <button class="chip active-green" onclick="selectFormato(this)">Vídeo curto (15s)</button>
+          <button class="chip" onclick="selectFormato(this)">Vídeo médio (30-60s)</button>
+          <button class="chip" onclick="selectFormato(this)">Live de vendas</button>
+          <button class="chip" onclick="selectFormato(this)">Duet/Stitch</button>
+          <button class="chip" onclick="selectFormato(this)">Carrossel</button>
+        </div>
+      </div>
+    </div>
+    <button class="btn-main" id="btnGerar" onclick="gerar()">⚡ Gerar Conteúdo para TikTok Shop</button>
+    <p class="error" id="erro" style="display:none"></p>
+  </div>
+
+  <div id="resultado" style="display:none" class="result">
+    <div class="hook-card">
+      <div>
+        <div class="hook-label">🎣 HOOK (3 PRIMEIROS SEGUNDOS)</div>
+        <div class="hook-text" id="hookText"></div>
+      </div>
+      <button class="copy-btn" onclick="copiar('hookText',this)">COPIAR</button>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <div class="tabs">
+        <button class="tab active" onclick="trocarTab(this,'script')">📝 Script</button>
+        <button class="tab" onclick="trocarTab(this,'caption')">✍️ Legenda</button>
+        <button class="tab" onclick="trocarTab(this,'hashtags')">️#️⃣ Hashtags</button>
+        <button class="tab" onclick="trocarTab(this,'extras')">💡 Extras</button>
+      </div>
+      <div id="tab-script" class="tab-content">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <span class="section-label">SCRIPT COMPLETO</span>
+          <button class="copy-btn" onclick="copiar('scriptText',this)">COPIAR</button>
+        </div>
+        <div class="text-box" id="scriptText"></div>
+        <div class="cta-box"><span id="ctaText"></span><button class="copy-btn" onclick="copiar('ctaText',this)">COPIAR</button></div>
+      </div>
+      <div id="tab-caption" class="tab-content" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <span class="section-label">LEGENDA DO POST</span>
+          <button class="copy-btn" onclick="copiar('captionText',this)">COPIAR</button>
+        </div>
+        <div class="text-box" id="captionText"></div>
+        <div class="seo-box"><span id="seoText"></span><button class="copy-btn" onclick="copiar('seoText',this)">COPIAR</button></div>
+      </div>
+      <div id="tab-hashtags" class="tab-content" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <span class="section-label">HASHTAGS ESTRATÉGICAS</span>
+          <button class="copy-btn" id="btnCopyHashtags" onclick="copiarHashtags(this)">COPIAR TODAS</button>
+        </div>
+        <div class="hashtags" id="hashtagsList"></div>
+      </div>
+      <div id="tab-extras" class="tab-content" style="display:none">
+        <div class="section-label" style="margin-bottom:10px">🧠 GATILHOS MENTAIS</div>
+        <div id="gatilhosList"></div>
+        <div class="section-label" style="margin-bottom:10px;margin-top:16px">🎬 DICAS DE GRAVAÇÃO</div>
+        <div id="dicasList"></div>
+      </div>
+    </div>
+    <button class="btn-regen" onclick="gerar()">🔄 Gerar nova versão</button>
+  </div>
+</div>
+
+<script>
+const GEMINI_API_KEY = "AIzaSyD_B1EiGMHE99AqMx-ZgBvJWPmj2-7nVWI";
+let tomAtivo = "Urgente 🔥";
+let formatoAtivo = "Vídeo curto (15s)";
+
+function selectTom(el){
+  document.querySelectorAll('#toms .chip').forEach(c=>c.className='chip');
+  el.className='chip active-red';
+  tomAtivo=el.textContent;
+}
+function selectFormato(el){
+  document.querySelectorAll('#formatos .chip').forEach(c=>c.className='chip');
+  el.className='chip active-green';
+  formatoAtivo=el.textContent;
+}
+function trocarTab(el,tab){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  ['script','caption','hashtags','extras'].forEach(t=>document.getElementById('tab-'+t).style.display=t===tab?'block':'none');
+}
+function copiar(id,btn){
+  const text=document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text);
+  btn.textContent='✓ COPIADO';
+  setTimeout(()=>btn.textContent='COPIAR',2000);
+}
+function copiarHashtags(btn){
+  const tags=[...document.querySelectorAll('#hashtagsList .hashtag')].map(h=>h.textContent).join(' ');
+  navigator.clipboard.writeText(tags);
+  btn.textContent='✓ COPIADO';
+  setTimeout(()=>btn.textContent='COPIAR TODAS',2000);
+}
+
+const systemPrompt=`Você é um especialista em criação de conteúdo para TikTok Shop com foco total em conversão e vendas. Responda APENAS com JSON puro, sem markdown, sem backticks, sem texto antes ou depois:\n{"hook":"frase impactante máx 10 palavras","script":"script completo com [PAUSA] [MOSTRAR PRODUTO] [ZOOM]","caption":"legenda com emojis e CTA","hashtags":["tag1","tag2","tag3","tag4","tag5","tag6","tag7","tag8","tag9","tag10","tag11","tag12","tag13","tag14","tag15","tag16","tag17","tag18","tag19","tag20"],"cta":"call to action principal","gatilhos":["gatilho1","gatilho2","gatilho3"],"dicas":["dica1","dica2","dica3"],"titulo_seo":"título otimizado"}`;
+
+async function gerar(){
+  const produto=document.getElementById('produto').value.trim();
+  if(!produto)return;
+  const btn=document.getElementById('btnGerar');
+  const erro=document.getElementById('erro');
+  btn.disabled=true;
+  btn.innerHTML='<span class="spinner"></span>Criando conteúdo viral...';
+  erro.style.display='none';
+  document.getElementById('resultado').style.display='none';
+
+  try{
+    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        system_instruction:{parts:[{text:systemPrompt}]},
+        contents:[{parts:[{text:`Produto: ${produto}\nTom: ${tomAtivo}\nFormato: ${formatoAtivo}\n\nResponda APENAS com o JSON puro.`}]}],
+        generationConfig:{temperature:0.8,maxOutputTokens:1500}
+      })
+    });
+    const data=await res.json();
+    const text=data.candidates?.[0]?.content?.parts?.[0]?.text||'';
+    const clean=text.replace(/```json|```/g,'').trim();
+    const d=JSON.parse(clean);
+
+    document.getElementById('hookText').textContent='"'+d.hook+'"';
+    document.getElementById('scriptText').textContent=d.script;
+    document.getElementById('ctaText').textContent=d.cta;
+    document.getElementById('captionText').textContent=d.caption;
+    document.getElementById('seoText').textContent=d.titulo_seo||'';
+
+    const hl=document.getElementById('hashtagsList');
+    hl.innerHTML=d.hashtags.map(h=>`<span class="hashtag">#${h.replace(/^#/,'')}</span>`).join('');
+
+    const gl=document.getElementById('gatilhosList');
+    gl.innerHTML=d.gatilhos.map(g=>`<div class="gatilho"><span style="color:#ff0050;font-weight:800;font-size:16px">✦</span>${g}</div>`).join('');
+
+    const dl=document.getElementById('dicasList');
+    dl.innerHTML=d.dicas.map((d,i)=>`<div class="dica"><span style="color:#00f5a0;font-weight:800">${i+1}.</span>${d}</div>`).join('');
+
+    document.getElementById('resultado').style.display='block';
+    trocarTab(document.querySelector('.tab'),'script');
+  }catch(e){
+    erro.textContent='Erro ao gerar conteúdo. Verifique sua chave de API.';
+    erro.style.display='block';
+  }finally{
+    btn.disabled=false;
+    btn.innerHTML='⚡ Gerar Conteúdo para TikTok Shop';
+  }
+}
+</script>
+</body>
 </html>
